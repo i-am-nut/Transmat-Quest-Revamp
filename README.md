@@ -25,4 +25,17 @@
 
 - After beating them, Watson hands for each one a disk containing the countermeasure software. Player must head now to a random (for each game player) defined Hoenn Poke Center to interact with the computer and accomplish desired installation.
 
-## Fifth step - Reach select Poke Center and install disk software
+## Fifth step - Reach to selected poke center and install disk software
+- Player must enter Transmat room and interact with the computer located at left side. The software will be installed, then player must travel back to Watson in New Mauville.
+
+- **Goal: Just interact with computer.**
+
+## Sixth step - Battle Team Aqua/Magma Leaders
+
+- Upon attempting leaving Transmat Room, Team Maqua leaders will suddenty appear and tell player they've come to install malware on that PC. For that they'll challenge player for battle, player must defeat both of them to stop Team Maqua once for all.
+
+- **Goal: Win Team Aqua/Magma leaders on a battle, respectively.**
+
+- After beating them, they'll say Team Maqua will be back one day and vanish right away. Player will be automattically teleported into New Mauville in front of Watson, then Watson will reward player with a nice item and announce Transmat System is available again for usage.
+
+**Whoa.... great! You've finished the quest!**
