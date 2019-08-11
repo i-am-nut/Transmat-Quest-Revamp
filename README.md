@@ -11,9 +11,9 @@
 
 ## Third step - Talk to Watson in New Mauville
 
-- Watson will tell New Mauville power generators are broken due to Team Maqua unknown actions. He is able to fix the damaged caused on generators only with the help of their Plusle and Minum. However, he is not with them in their party and he cannot leave New Mauville at the momment, so he asks player to catch both new ones and bring it to him. 
+- Watson will tell New Mauville power generators are broken due to Team Maqua unknown actions. He is able to fix the damaged caused on generators only with the help of their Plusle or Minum. However, he is not with them in their party and he cannot leave New Mauville at the momment, so he asks player to catch one of them and bring it to him. 
 
-- **Goal: Hunt and catch Plusle and Minun (your OT) and show them to Watson.**
+- **Goal: Hunt and catch Plusle or Minun (your OT) and show them to Watson.**
 
 - After powering generators up, he gets aware that Team Maqua are moving to deploy malwares in every single computer controlling Transmat System on Hoenn Poke Centers, in order to conquer and rule on their own the whole system. 
 
