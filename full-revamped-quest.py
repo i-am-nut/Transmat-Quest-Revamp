@@ -54,9 +54,9 @@ if user.vars.TradeWattson #I didnt wanna use a number for an existing NPC, so I 
     user.say('You must defeat Wally and May on a battle, so they can help you to reach \\
             the Poke Centers and install the countermeasure software faster!')
 
-user.say('You must catch a Plusle and Minun, so that I can charge those generators up again and attempt by \\
+user.say('You must catch a Plusle or Minun, so that I can charge those generators up again and attempt by \\
         myself some sort of temporary workaround for Transmat System!')
-choice = user.select("Did you bring me my precious Plusle and Minun?", ["Yes.", "No"])
+choice = user.select("Did you bring me my precious Plusle or Minun?", ["Yes.", "No"])
 if choice[0] == 1:
     return user.say("Please hurry!.")
 
@@ -84,8 +84,8 @@ hoenn_cities = ['Littleroot','Oldale','Petalburg','Rustboro','Dewford','Slatepor
 
 user.say("Wally: Show me you've got that really strong enough to make both of us work together against these bad guys gangs!")
 user.pause()
-npcs[2].team = [Pokemon("Altaria", 75), Pokemon("Roserade", 75), Pokemon("Aggron", 75), Pokemon("Mega Gallade", 75)]
-npcs[3].team = [Pokemon("Swellow", 75), Pokemon("Magcargo", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
+npcs[2].team = [Pokemon("Swellow", 75), Pokemon("Roserade", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
+npcs[3].team = [Pokemon("Alraria", 75), Pokemon("Magnezone", 75), Pokemon("Aggron", 75), Pokemon("Mega Gallade", 75)]
 result = user.battle(npcs[2])
 #in case winning Wally, battle sequentially May
 if result == 1:
@@ -124,8 +124,8 @@ npcs[5].id == server.vars.Magma_Leader
 npcs[6].id == server.vars.Aqua_Leader
 npcs[5].hide, npcs[6].hide = False
 #SOMEONE DEFINE A DIFFERENT TEAM HERE, PLEASE XD
-npcs[5].team = [Pokemon("Swellow", 75), Pokemon("Magcargo", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
-npcs[6].team = [Pokemon("Swellow", 75), Pokemon("Magcargo", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
+npcs[5].team = [Pokemon("Crobat", 75), Pokemon("Mighteyena", 75), Pokemon("Arcanine", 75), Pokemon("Mega Camerupt", 75)]
+npcs[6].team = [Pokemon("Crobat", 75), Pokemon("Mighteyena", 75), Pokemon("Milotic", 75), Pokemon("Mega Sharpedo", 75)]
 user.say("Team Magma Leader: You won't go that far, kid!")
 user.say("Team Aqua Leader: We arrived at the exactly time to kick you out and install a new software \\
         on computer to make Transmat system completely owned for Team Aqua and Magma!")
@@ -138,9 +138,9 @@ if result == 1:
     user.say("Team Aqua: Don't think we are done, battle now!")
     result = user.battle(npcs[6])
     if result == 1:
-        user.say("Team Aqua Leader: No! Can't believe our plans are being delayed by that kid again.")
-        user.say("Team Magma Leader: It's not the end, we are bigger and stronger than you've seen here now")
-        user.say("Team Magma/Aqua Leaders: Save our words, we will be back in the future!")
+        user.say("Team Aqua Leader: No! Can't believe our plans are being delayed by a kid again.")
+        user.say("Team Magma Leader: We must go back to the drawing board.")
+        user.say("Team Magma/Aqua Leaders: Remember this, we will be back in the future!")
         user.pause()
         #making them disappear
         npcs[5].hide, npcs[6].hide = True
