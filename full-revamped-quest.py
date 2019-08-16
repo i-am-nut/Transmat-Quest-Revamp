@@ -20,6 +20,9 @@ server.vars.set("Mauville_Secure_Officer", 4)
 server.vars.set("Magma_Leader", 5)
 server.vars.set("Aqua_Leader", 6)
 
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 1 Reach Mauville after beating Hoenn Elite Four.
+#--------------------------------------------------------------------------------------------------------------------------------
 #ensuring player will be prompted by these msgs only once when visiting Mauville first time after beating Hoenn E4
 #instead of being prompted every single step while walking on Mauville
 if user.position.map == 'Mauville' and user.vars.HoennChamp and not user.vars.TransmatQuestDone and not user.vars.TransmatQuestStarted:
@@ -31,6 +34,9 @@ if user.position.map == 'Mauville' and user.vars.HoennChamp and not user.vars.Tr
     user.vars.set("TransmatQuestStarted", True)
 
 
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 2 Talk to Mauville Poke Center Secure Officer
+#--------------------------------------------------------------------------------------------------------------------------------
 #Secure Officer interaction
 #refine these npc text messages
 if user.vars.interaction_secure_office:
@@ -47,6 +53,11 @@ else:
     user.vars.set("interaction_secure_office", True)
 
 
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 3 Talk to Watson in New Mauville
+#--------------------------------------------------------------------------------------------------------------------------------
+# kop ------ other requirement can be IV and EV to make the pokemon seem be valuable add value in the pokemon
 #Watson interaction, catching Plusle and Minun
 #add here more npc storytelling text message
 if user.vars.TradeWattson #I didnt wanna use a number for an existing NPC, so I used a name
@@ -65,12 +76,38 @@ poke = user.select_pokemon("Select your Plusle/Minun")
 if poke.name != "Plusle" or poke.name !="Minun" or poke.ot != user.username:
     return user.say("You didn't find that pokemon!")
 
+
+
+# kop - don't understand this line 
+# don't know if poke should be deleted. It will be the opposite of hunting
+# or maybe I misunderstand this 
 del user.pokes[poke.pos]
 
 user.say("Thank you so much!!")
 user.pause()
 user.var.TradeWattson = 1
 
+# kop ------------------------------------------------------
+# option can be check for minum and plulse IV and EV
+plusle_and_minum = ["Plusle", "Minun"]
+value_IV = 100 # can change value if you 
+value_EV = 510 # should be 510 maximum EV 
+poke = user.select_pokemon("Select your Plusle/Minun")
+if poke.name in plusle_and_minum and poke.total_ivs >= value_IV and poke.total_evs >= value_EV:
+    plusle_and_minum.remove[poke.name]
+
+if len(plusle_and_minum) == 0:
+    user.say("Thank you so much!!")
+    user.pause()
+    user.var.TradeWattson = 1
+else
+    user.say("Hurry up!")
+
+
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 4 Battle May and Wally
+#--------------------------------------------------------------------------------------------------------------------------------
 #Making Wally and May appear for player interaction after finishing Plusle and Minun hunting
 npcs[2].id == server.vars.May
 npcs[3].id == server.vars.Wally
@@ -80,6 +117,7 @@ npcs[2].hide, npcs[3].hide = False
 #Wally and May interaction and Battle
 
 #list of cities
+# kop - should it be random? Fix city should be ideal in this situation. 
 hoenn_cities = ['Littleroot','Oldale','Petalburg','Rustboro','Dewford','Slateport','Mauville','Verdanturf','Fallarbor','Lavaridge','Fortree','Lilycove','Mossdeep','Sootopolis','Pacifidlog','Ever Grande']
 
 user.say("Wally: Show me you've got that really strong enough to make both of us work together against these bad guys gangs!")
@@ -87,6 +125,8 @@ user.pause()
 npcs[2].team = [Pokemon("Swellow", 75), Pokemon("Roserade", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
 npcs[3].team = [Pokemon("Alraria", 75), Pokemon("Magnezone", 75), Pokemon("Aggron", 75), Pokemon("Mega Gallade", 75)]
 result = user.battle(npcs[2])
+
+# kop - should battle between them being sequentially ???
 #in case winning Wally, battle sequentially May
 if result == 1:
     user.say("May: Wally, will only move a finger if you also defeat me {}, bring it on!".format(user.username))
@@ -101,7 +141,36 @@ if result == 1:
         #making them disappear
         npcs[2].hide, npcs[3].hide = True
 
+# kop --------
+# alternative choice can be that battle can be split into 2 function one for Wally and one for May 
+# since I think it would be better for them to be independent with each other.
 
+
+# upon interact with Wally
+choosen_city = "Slateport"
+user.say("Wally: Show me you've got that really strong enough to make both of us work together against these bad guys gangs!")
+npcs[2].team = [Pokemon("Swellow", 75), Pokemon("Roserade", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
+result = user.battle(npcs[2])
+if result == 1:
+    user.say("Wally: ... Fine! I'll help to remove those malware at {}", choosen_city)
+    npcs[2].hide = True
+
+
+# now for May 
+choosen_city = "Rustboro"
+user.say("May: Show me your power if you think you are worthy of my help") 
+npcs[3].team = [Pokemon("Alraria", 75), Pokemon("Magnezone", 75), Pokemon("Aggron", 75), Pokemon("Mega Gallade", 75)]
+result = user.battle(npcs[3])
+if result == 1:
+    user.say("Wally: ... Fine! I'll help to remove those malware at {}", choosen_city)
+    npcs[3].hide = True
+
+
+
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 5 Reach to selected poke center and install disk software
+#--------------------------------------------------------------------------------------------------------------------------------
 #Interacting to PC computer
 if user.vars.interaction_transmat_computer:
     user.say("The computer seems running fine with countermeasure software installed.")
@@ -116,6 +185,11 @@ else:
     user.vars.set("interaction_transmat_computer", True)
 
 
+
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 6 Battle Team Aqua/Magma Leaders
+#--------------------------------------------------------------------------------------------------------------------------------
 #Interacting NPCs Team Aqua/Magma Leaders
 #detect here if user position is the squares around room's exit, it will trigger showing Gang Leaders event
 
@@ -155,3 +229,43 @@ if result == 1:
         user.vars.TransmatQuestDone = True
 else: 
     #condition in case player lose battle
+    #if player has to pay for that don't let them battle 2 of them again.
+
+
+# kop - split 2 battle
+# Aqua and Magma should be seperate since they don't get well together
+result = user.battle(npcs[5])
+if result == 1:
+    user.say("Team Aqua Leader: No! Can't believe our plans are being delayed by a kid again.")
+    npcs[6].hide = True
+
+
+result = user.battle(npcs[6])
+if result == 1:
+    user.say("Team Magma Leader: We must go back to the drawing board.")
+    user.say("Remember this, we will be back in the future!")
+    user.pause()
+    #making them disappear
+    npcs[5].hide,
+
+
+
+
+#--------------------------------------------------------------------------------------------------------------------------------
+# Step 7 Reward
+#--------------------------------------------------------------------------------------------------------------------------------
+# dont know the value
+x = 10000000000
+y = 10000000000
+
+#teleport player to New Mauville space in front of Watson
+user.teleport("Pokecenter Vermilion", x, y)
+#final dialog to end quest, Watson Interaction
+user.say("Watson: Thank you kind, Transmat System is available again!")
+user.say("Watson: Beyond you're being able to use the system whenever you want hence and forth, receive that reward as \\
+        my gratitude for your performace to save Mauville and Hoenn entirely")
+user.pause()
+
+# kop -- well since this quest for teleport system I doubt we have any reward at all @@
+user.items['Big Nugget'] = user.items['Big Nugget'] + 1 #maybe it's not a fair item for all those battles? XD
+user.vars.TransmatQuestDone = True
