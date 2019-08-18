@@ -57,7 +57,7 @@ else:
 #--------------------------------------------------------------------------------------------------------------------------------
 # Step 3 Talk to Watson in New Mauville
 #--------------------------------------------------------------------------------------------------------------------------------
-# kop ------ other requirement can be IV and EV to make the pokemon seem be valuable add value in the pokemon
+#ShadyShiftry
 #Watson interaction, catching Plusle and Minun
 #add here more npc storytelling text message
 if user.vars.TradeWattson #I didnt wanna use a number for an existing NPC, so I used a name
@@ -65,43 +65,22 @@ if user.vars.TradeWattson #I didnt wanna use a number for an existing NPC, so I 
     user.say('You must defeat Wally and May on a battle, so they can help you to reach \\
             the Poke Centers and install the countermeasure software faster!')
 
-user.say('You must catch a Plusle or Minun, so that I can charge those generators up again and attempt by \\
-        myself some sort of temporary workaround for Transmat System!')
+user.say('You must catch a Plusle or Minun, so that I can charge those generators up again and attempt to reboot the system.)
 choice = user.select("Did you bring me my precious Plusle or Minun?", ["Yes.", "No"])
 if choice[0] == 1:
     return user.say("Please hurry!.")
 
 #If the pokemon is not Plusle/Minun and not your OT
 poke = user.select_pokemon("Select your Plusle/Minun")
-if poke.name != "Plusle" or poke.name !="Minun" or poke.ot != user.username:
+if poke.name != "Plusle" and poke.ot !=user.username or poke.name !="Minun" and poke.ot != user.username:
     return user.say("You didn't find that pokemon!")
-
-
-
-# kop - don't understand this line 
-# don't know if poke should be deleted. It will be the opposite of hunting
-# or maybe I misunderstand this 
 del user.pokes[poke.pos]
 
 user.say("Thank you so much!!")
 user.pause()
 user.var.TradeWattson = 1
 
-# kop ------------------------------------------------------
-# option can be check for minum and plulse IV and EV
-plusle_and_minum = ["Plusle", "Minun"]
-value_IV = 100 # can change value if you 
-value_EV = 510 # should be 510 maximum EV 
-poke = user.select_pokemon("Select your Plusle/Minun")
-if poke.name in plusle_and_minum and poke.total_ivs >= value_IV and poke.total_evs >= value_EV:
-    plusle_and_minum.remove[poke.name]
 
-if len(plusle_and_minum) == 0:
-    user.say("Thank you so much!!")
-    user.pause()
-    user.var.TradeWattson = 1
-else
-    user.say("Hurry up!")
 
 
 
