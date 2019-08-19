@@ -92,58 +92,33 @@ npcs[2].id == server.vars.May
 npcs[3].id == server.vars.Wally
 npcs[2].hide, npcs[3].hide = False
 
-
-#Wally and May interaction and Battle
-
-#list of cities
-# kop - should it be random? Fix city should be ideal in this situation. 
 hoenn_cities = ['Littleroot','Oldale','Petalburg','Rustboro','Dewford','Slateport','Mauville','Verdanturf','Fallarbor','Lavaridge','Fortree','Lilycove','Mossdeep','Sootopolis','Pacifidlog','Ever Grande']
-
-user.say("Wally: Show me you've got that really strong enough to make both of us work together against these bad guys gangs!")
-user.pause()
 npcs[2].team = [Pokemon("Swellow", 75), Pokemon("Roserade", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
 npcs[3].team = [Pokemon("Alraria", 75), Pokemon("Magnezone", 75), Pokemon("Aggron", 75), Pokemon("Mega Gallade", 75)]
-result = user.battle(npcs[2])
-
-# kop - should battle between them being sequentially ???
-#in case winning Wally, battle sequentially May
-if result == 1:
-    user.say("May: Wally, will only move a finger if you also defeat me {}, bring it on!".format(user.username))
-    result = user.battle(npcs[3])
-    if result == 1:
-        #routine for random selected Hoenn PC
-        choosen_cities = [hoenn_cities.pop(random.randrange(len(hoenn_cities))) for counter in range(3)]
-        user.say("May: Fair enough, we will be heading to {} and {} as fast as we can. {}, do the \\
-                same right now!".format(choosen_cities[0], choosen_cities[1], user.username))
-        user.say("Hurry to {}!".format(choosen_cities[2]))
-        user.pause()
-        #making them disappear
-        npcs[2].hide, npcs[3].hide = True
-
-# kop --------
-# alternative choice can be that battle can be split into 2 function one for Wally and one for May 
-# since I think it would be better for them to be independent with each other.
-
+choosen_cities = [hoenn_cities.pop(random.randrange(len(hoenn_cities))) for counter in range(3)]
 
 # upon interact with Wally
-choosen_city = "Slateport"
 user.say("Wally: Show me you've got that really strong enough to make both of us work together against these bad guys gangs!")
-npcs[2].team = [Pokemon("Swellow", 75), Pokemon("Roserade", 75), Pokemon("Togekiss", 75), Pokemon("Slaking", 75)]
-result = user.battle(npcs[2])
+user.pause()
+result = user.battle(npcs[2], no_exp=True)
 if result == 1:
-    user.say("Wally: ... Fine! I'll help to remove those malware at {}", choosen_city)
+    user.say("Wally: ... Fine! I'll help to remove those malware at {}", choosen_cities[0])
     npcs[2].hide = True
 
 
-# now for May 
+# upon interact with May 
 choosen_city = "Rustboro"
-user.say("May: Show me your power if you think you are worthy of my help") 
-npcs[3].team = [Pokemon("Alraria", 75), Pokemon("Magnezone", 75), Pokemon("Aggron", 75), Pokemon("Mega Gallade", 75)]
-result = user.battle(npcs[3])
+user.say("May: Show me your power if you think you are worthy of my help")
+user.pause()
+result = user.battle(npcs[3], no_exp=True)
 if result == 1:
-    user.say("Wally: ... Fine! I'll help to remove those malware at {}", choosen_city)
+    user.say("Wally: ... Fine! I'll help to remove those malware at {}", choosen_cities[1])
     npcs[3].hide = True
 
+
+if npcs[3].hide == True and npcs[2].hide == True:
+    user.pause()
+    user.say("Now I must hurry to {}!".format(choosen_cities[2]))
 
 
 
@@ -177,57 +152,35 @@ npcs[5].id == server.vars.Magma_Leader
 npcs[6].id == server.vars.Aqua_Leader
 npcs[5].hide, npcs[6].hide = False
 #SOMEONE DEFINE A DIFFERENT TEAM HERE, PLEASE XD
-npcs[5].team = [Pokemon("Crobat", 75), Pokemon("Mighteyena", 75), Pokemon("Arcanine", 75), Pokemon("Mega Camerupt", 75)]
-npcs[6].team = [Pokemon("Crobat", 75), Pokemon("Mighteyena", 75), Pokemon("Milotic", 75), Pokemon("Mega Sharpedo", 75)]
-user.say("Team Magma Leader: You won't go that far, kid!")
+
 user.say("Team Aqua Leader: We arrived at the exactly time to kick you out and install a new software \\
         on computer to make Transmat system completely owned for Team Aqua and Magma!")
 user.say("Team Magma/Aqua Leader: We will take it over once for all!")
 user.say("Team Magma Leader: Get yourself ready now and let's battle, me first!")
+
+
+user.say("Team Magma Leader: You won't go that far, kid!")
+npcs[5].team = [Pokemon("Crobat", 75), Pokemon("Mighteyena", 75), Pokemon("Arcanine", 75), Pokemon("Mega Camerupt", 75)]
 user.pause()
-#routine for Battling Team Aqua and Magma Leaders
-result = user.battle(npcs[5])
+result = user.battle(npcs[5], no_exp=True)
 if result == 1:
-    user.say("Team Aqua: Don't think we are done, battle now!")
-    result = user.battle(npcs[6])
-    if result == 1:
-        user.say("Team Aqua Leader: No! Can't believe our plans are being delayed by a kid again.")
-        user.say("Team Magma Leader: We must go back to the drawing board.")
-        user.say("Team Magma/Aqua Leaders: Remember this, we will be back in the future!")
-        user.pause()
-        #making them disappear
-        npcs[5].hide, npcs[6].hide = True
-        #teleport player to New Mauville space in front of Watson
-
-        #final dialog to end quest, Watson Interaction
-        user.say("Watson: Thank you kind, Transmat System is available again!")
-        user.say("Watson: Beyond you're being able to use the system whenever you want hence and forth, receive that reward as \\
-                my gratitude for your performace to save Mauville and Hoenn entirely")
-        user.pause()
-        user.items['Big Nugget'] = user.items['Big Nugget'] + 1 #maybe it's not a fair item for all those battles? XD
-        user.vars.TransmatQuestDone = True
-else: 
-    #condition in case player lose battle
-    #if player has to pay for that don't let them battle 2 of them again.
-
-
-# kop - split 2 battle
-# Aqua and Magma should be seperate since they don't get well together
-result = user.battle(npcs[5])
-if result == 1:
-    user.say("Team Aqua Leader: No! Can't believe our plans are being delayed by a kid again.")
+    user.say("Team Magma Leader: No! Can't believe our plans are being delayed by a kid again.")
     npcs[6].hide = True
 
 
-result = user.battle(npcs[6])
+
+npcs[6].team = [Pokemon("Crobat", 75), Pokemon("Mighteyena", 75), Pokemon("Milotic", 75), Pokemon("Mega Sharpedo", 75)]
+user.pause()
+result = user.battle(npcs[6], no_exp=True)
 if result == 1:
-    user.say("Team Magma Leader: We must go back to the drawing board.")
+    user.say("Team Aqua Leader: We must go back to the drawing board.")
     user.say("Remember this, we will be back in the future!")
     user.pause()
     #making them disappear
-    npcs[5].hide,
+    npcs[5].hide = True
 
-
+if npcs[5].hide == True and npcs[6].hide == True:
+    user.say("I must go back and talk to Watson")
 
 
 #--------------------------------------------------------------------------------------------------------------------------------
@@ -238,7 +191,7 @@ x = 10000000000
 y = 10000000000
 
 #teleport player to New Mauville space in front of Watson
-user.teleport("Pokecenter Vermilion", x, y)
+user.teleport("Pokecenter New Mauville", x, y)
 #final dialog to end quest, Watson Interaction
 user.say("Watson: Thank you kind, Transmat System is available again!")
 user.say("Watson: Beyond you're being able to use the system whenever you want hence and forth, receive that reward as \\
