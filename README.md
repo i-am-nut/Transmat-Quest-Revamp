@@ -36,6 +36,10 @@
 
 - **Goal: Win Team Aqua/Magma leaders on a battle, respectively.**
 
+## Seventh step - Reward
+
 - After beating them, they'll say Team Maqua will be back one day and vanish right away. Player will be automattically teleported into New Mauville in front of Watson, then Watson will reward player with a nice item and announce Transmat System is available again for usage.
+
+- **No Goal: Transmat system is unlocked, retrieve your reward now :)**
 
 **Whoa.... great! You've finished the quest!**
